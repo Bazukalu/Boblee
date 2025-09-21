@@ -1,13 +1,18 @@
 [
     {
         "name": "Program",
-        "files": [ "Program.exe", "PC.txt", "image.png" ]
+        "files": [
+            "https://drive.google.com/uc?export=download&id=17wshsxD7XvO1qEguM_QTc30pPxoRI1dR",
+            "PC.txt",
+            "image.png"
+        ]
     },
-
-     {
+    {
         "name": "Chef Cook",
-        "files": [ "apk.apk", "VR.txt", "cook.png" ]
+        "files": [
+            "https://drive.google.com/uc?export=download&id=1zbi7bosmdg4zFU7a3n5DCywZ7d-aKKOc",
+            "VR.txt",
+            "cook.png"
+        ]
     }
 ]
-
-
