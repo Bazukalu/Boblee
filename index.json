@@ -1,18 +1,14 @@
 [
-    {
-        "name": "Program",
-        "files": [
-            "https://drive.google.com/uc?export=download&id=17wshsxD7XvO1qEguM_QTc30pPxoRI1dR",
-            "PC.txt",
-            "image.png"
-        ]
-    },
-    {
-        "name": "Chef Cook",
-        "files": [
-            "https://drive.google.com/uc?export=download&id=1zbi7bosmdg4zFU7a3n5DCywZ7d-aKKOc",
-            "VR.txt",
-            "cook.png"
-        ]
-    }
+  {
+    "name": "Program",
+    "image": "image.png",
+    "type": "PC",
+    "download": "https://drive.google.com/uc?export=download&id=17wshsxD7XvO1qEguM_QTc30pPxoRI1dR"
+  },
+  {
+    "name": "Chef Cook",
+    "image": "cook.png",
+    "type": "VR",
+    "download": "https://drive.google.com/uc?export=download&id=1zbi7bosmdg4zFU7a3n5DCywZ7d-aKKOc"
+  }
 ]
