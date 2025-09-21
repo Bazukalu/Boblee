@@ -99,12 +99,12 @@ async function loadDownloads() {
         card.appendChild(p);
       }
 
-      // download button: first .exe/.zip/.apk (Google Drive link)
-      const downloadFile = folder.files.find(f => /\.(exe|zip|apk)$/.test(f));
+      // download button: first Google Drive link
+      const downloadFile = folder.files.find(f => f.startsWith('https://drive.google.com/uc?export=download'));
       if (downloadFile) {
         const btn = document.createElement('a');
-        btn.href = downloadFile;  // direct Google Drive link
-        btn.download = "";
+        btn.href = downloadFile;
+        btn.download = "";   // lets browser handle the download filename
         btn.className = "btn";
         btn.textContent = "Download";
         card.appendChild(btn);
