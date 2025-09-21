@@ -6,7 +6,8 @@
 
      {
         "name": "Chef Cook",
-        "files": [ "apk.apk", "VR.txt", "image.png" ]
+        "files": [ "apk.apk", "VR.txt", "cook.png" ]
     }
 ]
+
 
