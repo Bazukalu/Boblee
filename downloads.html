@@ -16,41 +16,27 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  background: var(--bg);
-  color: #e6eef6;
-  display: flex;
-  justify-content: center;
-  padding: 32px;
-}
-.wrap { max-width: var(--max-w); width: 100%; }
-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; }
-header h1 { margin: 0; font-size: 24px; }
-header nav a {
-  color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 6px; margin: 4px; display: inline-block; background: rgba(255,255,255,0.05);
-}
-header nav a:hover { background: var(--accent); color: #04273b; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: var(--gap); }
-.card { background: var(--card); border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
-.card img { max-width: 150px; margin-bottom: 12px; border-radius: 8px; }
-.btn {
-  background: var(--accent); color: #04273b; border: none; padding: 10px 14px; border-radius: 10px; font-weight: 700; cursor: pointer;
-  text-decoration: none; display: inline-block;
-}
-.card p { color: var(--muted); margin-top: 8px; font-size: 14px; }
+body { margin:0; font-family:Inter,sans-serif; background:var(--bg); color:#e6eef6; display:flex; justify-content:center; padding:32px; }
+.wrap { max-width: var(--max-w); width:100%; }
+header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; }
+header h1 { margin:0; font-size:24px; }
+header nav a { color:var(--muted); text-decoration:none; padding:6px 12px; border-radius:6px; margin:4px; display:inline-block; background: rgba(255,255,255,0.05); }
+header nav a:hover { background: var(--accent); color:#04273b; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:var(--gap); }
+.card { background: var(--card); border-radius:var(--radius); padding:16px; display:flex; flex-direction:column; align-items:center; text-align:center; box-shadow:0 8px 24px rgba(0,0,0,0.5); }
+.card img { max-width:150px; margin-bottom:12px; border-radius:8px; }
+.btn { background:var(--accent); color:#04273b; border:none; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-block; margin-top:8px; }
+.card p { color:var(--muted); margin-top:8px; font-size:14px; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>Boblee Downloads</h1>
-    <nav id="foldersNav"></nav>
-  </header>
-  <main class="grid" id="downloadsGrid"></main>
+<header>
+<h1>Boblee Downloads</h1>
+<nav id="foldersNav"></nav>
+</header>
+<main class="grid" id="downloadsGrid"></main>
 </div>
-
 <script>
 const jsonURL = "https://raw.githubusercontent.com/Bazukalu/Boblee/main/index.json";
 const grid = document.getElementById('downloadsGrid');
@@ -59,10 +45,9 @@ const nav = document.getElementById('foldersNav');
 async function loadDownloads() {
   try {
     const res = await fetch(jsonURL);
-    if (!res.ok) throw new Error('Cannot fetch index.json');
+    if (!res.ok) throw new Error("Cannot fetch index.json");
     const folders = await res.json();
 
-    // create nav links
     folders.forEach(f => {
       const a = document.createElement('a');
       a.href = `#${f.name}`;
@@ -70,7 +55,6 @@ async function loadDownloads() {
       nav.appendChild(a);
     });
 
-    // create cards
     folders.forEach(folder => {
       const card = document.createElement('div');
       card.className = 'card';
@@ -80,33 +64,30 @@ async function loadDownloads() {
       title.textContent = folder.name;
       card.appendChild(title);
 
-      // image from images/ folder (original system)
-      const imgFile = folder.files.find(f => f.endsWith('.png'));
+      const imgFile = folder.files.find(f => f.endsWith(".png"));
       if (imgFile) {
         const img = document.createElement('img');
-        img.src = 'images/' + imgFile;
+        img.src = "images/" + imgFile;
         img.alt = folder.name;
         img.onerror = () => img.remove();
         card.appendChild(img);
       }
 
-      // type from .txt
-      const typeFile = folder.files.find(f => f.endsWith('.txt'));
+      const typeFile = folder.files.find(f => f.endsWith(".txt"));
       if (typeFile) {
-        const typeText = typeFile.replace('.txt','');
         const p = document.createElement('p');
-        p.textContent = typeText;
+        p.textContent = typeFile.replace(".txt","");
         card.appendChild(p);
       }
 
-      // download button: first Google Drive link
-      const downloadFile = folder.files.find(f => f.startsWith('https://drive.google.com/uc?export=download'));
+      // ✅ Download button
+      const downloadFile = folder.files.find(f => typeof f === "string" && f.startsWith("https://drive.google.com/uc?export=download"));
       if (downloadFile) {
         const btn = document.createElement('a');
         btn.href = downloadFile;
-        btn.download = "";   // lets browser handle the download filename
         btn.className = "btn";
         btn.textContent = "Download";
+        btn.target = "_blank"; // ensures download starts
         card.appendChild(btn);
       }
 
@@ -122,7 +103,7 @@ async function loadDownloads() {
     grid.appendChild(finalCard);
 
   } catch (err) {
-    console.error("Error loading downloads:", err);
+    console.error(err);
     const errorCard = document.createElement('div');
     errorCard.className = 'card';
     const p = document.createElement('p');
