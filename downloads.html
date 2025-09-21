@@ -1,216 +1,175 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Boblee Downloads</title>
-    <style>
-        :root {
-            --bg: #0f1720;
-            --card: #0b1a26;
-            --accent: #7dd3fc;
-            --muted: #94a3b8;
-            --radius: 12px;
-            --max-w: 1100px;
-            --gap: 20px;
-            color-scheme: dark;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            background: var(--bg);
-            color: #e6eef6;
-            display: flex;
-            justify-content: center;
-            padding: 32px;
-        }
-
-        .wrap {
-            max-width: var(--max-w);
-            width: 100%;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-
-            header h1 {
-                margin: 0;
-                font-size: 24px;
-            }
-
-            header nav a {
-                color: var(--muted);
-                text-decoration: none;
-                padding: 6px 12px;
-                border-radius: 6px;
-                margin: 4px;
-                display: inline-block;
-                background: rgba(255,255,255,0.05);
-            }
-
-                header nav a:hover {
-                    background: var(--accent);
-                    color: #04273b;
-                }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-            gap: var(--gap);
-        }
-
-        .card {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-        }
-
-            .card img {
-                max-width: 150px;
-                margin-bottom: 12px;
-                border-radius: 8px;
-            }
-
-        .btn {
-            background: var(--accent);
-            color: #04273b;
-            border: none;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 8px;
-        }
-
-        .card p {
-            color: var(--muted);
-            margin-top: 8px;
-            font-size: 14px;
-            font-style: italic;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boblee Downloads</title>
+<style>
+:root {
+    --bg: #0f1720;
+    --card: #0b1a26;
+    --accent: #7dd3fc;
+    --muted: #94a3b8;
+    --radius: 12px;
+    --max-w: 1100px;
+    --gap: 20px;
+    color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+    margin:0;
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: var(--bg);
+    color:#e6eef6;
+    display:flex;
+    justify-content:center;
+    padding:32px;
+}
+.wrap { max-width: var(--max-w); width:100%; }
+header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; }
+header h1 { margin:0; font-size:24px; }
+header nav a {
+    color: var(--muted);
+    text-decoration:none;
+    padding:6px 12px;
+    border-radius:6px;
+    margin:4px;
+    display:inline-block;
+    background: rgba(255,255,255,0.05);
+}
+header nav a:hover { background: var(--accent); color:#04273b; }
+.grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+    gap: var(--gap);
+}
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.card img { max-width:150px; margin-bottom:12px; border-radius:8px; }
+.btn {
+    background: var(--accent);
+    color:#04273b;
+    border:none;
+    padding:10px 14px;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+    margin-top:8px;
+}
+.card p { color:var(--muted); margin-top:8px; font-size:14px; font-style:italic; }
+</style>
 </head>
 <body>
-    <div class="wrap">
-        <header>
-            <h1>Boblee Downloads</h1>
-            <nav id="foldersNav"></nav>
-        </header>
-        <main class="grid" id="downloadsGrid"></main>
-    </div>
+<div class="wrap">
+    <header>
+        <h1>Boblee Downloads</h1>
+        <nav id="foldersNav"></nav>
+    </header>
+    <main class="grid" id="downloadsGrid"></main>
+</div>
 
-    <script>
-        const grid = document.getElementById('downloadsGrid');
-        const nav = document.getElementById('foldersNav');
+<script>
+const grid = document.getElementById('downloadsGrid');
+const nav = document.getElementById('foldersNav');
 
-        async function loadDownloads() {
-            try {
-                const res = await fetch('index.json');
+async function loadDownloads() {
+    try {
+        const res = await fetch('download.json'); // <- fetch your actual JSON
+        if (!res.ok) throw new Error("Cannot fetch download.json");
+        const folders = await res.json();
 
-                if (!res.ok) throw new Error("Cannot fetch index.json");
-                const folders = await res.json();
+        if (!folders.length) throw new Error("No folders found in JSON");
 
-                if (!folders.length) throw new Error("No folders found in JSON");
+        folders.forEach(folder => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.id = folder.name;
 
-                folders.forEach(folder => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.id = folder.name;
+            // Title
+            const title = document.createElement('h3');
+            title.textContent = folder.name;
+            card.appendChild(title);
 
-                    // Title
-                    const title = document.createElement('h3');
-                    title.textContent = folder.name;
-                    card.appendChild(title);
-
-                    // Image
-                    const imgFile = folder.files.find(f => f.endsWith('.png'));
-                    if (imgFile) {
-                        const img = document.createElement('img');
-                        img.src = `downloads/${folder.name}/${imgFile}`;
-                        img.alt = folder.name;
-                        img.onerror = () => img.remove();
-                        card.appendChild(img);
-                    }
-
-                    // Type (PC.txt, VR.txt, etc.)
-                    const typeFile = folder.files.find(f => f.endsWith('.txt'));
-                    if (typeFile) {
-                        const typeText = typeFile.replace('.txt', '');
-                        const p = document.createElement('p');
-                        p.textContent = typeText;
-                        card.appendChild(p);
-                    }
-
-                    // Download button (exe, zip, apk)
-                    const downloadFile = folder.files.find(f => /\.(exe|zip|apk)$/.test(f));
-                    if (downloadFile) {
-                        const btn = document.createElement('a');
-                        btn.href = `downloads/${folder.name}/${downloadFile}`;
-                        btn.download = downloadFile;
-                        btn.className = "btn";
-                        btn.textContent = "Download";
-                        card.appendChild(btn);
-                    }
-
-                    grid.appendChild(card);
-
-                    // Nav link
-                    const a = document.createElement('a');
-                    a.href = `#${folder.name}`;
-                    a.textContent = folder.name;
-                    nav.appendChild(a);
-                });
-
-                // Always add last "That's all for now" card
-                const lastCard = document.createElement('div');
-                lastCard.className = 'card';
-                const lastTitle = document.createElement('h3');
-                lastTitle.textContent = "That's all for now";
-                lastCard.appendChild(lastTitle);
-                grid.appendChild(lastCard);
-
-            } catch (err) {
-                console.error(err);
-                // Show error card
-                const errorCard = document.createElement('div');
-                errorCard.className = 'card';
-                const errorTitle = document.createElement('h3');
-                errorTitle.textContent = "Error loading downloads";
-                const errorMsg = document.createElement('p');
-                errorMsg.textContent = err.message;
-                errorCard.appendChild(errorTitle);
-                errorCard.appendChild(errorMsg);
-                grid.appendChild(errorCard);
-
-                // Also add the "That's all for now" card
-                const lastCard = document.createElement('div');
-                lastCard.className = 'card';
-                const lastTitle = document.createElement('h3');
-                lastTitle.textContent = "That's all for now";
-                lastCard.appendChild(lastTitle);
-                grid.appendChild(lastCard);
+            // Image
+            const imgFile = folder.files.find(f => f.endsWith('.png'));
+            if (imgFile) {
+                const img = document.createElement('img');
+                img.src = imgFile; // file in root
+                img.alt = folder.name;
+                img.onerror = () => img.remove();
+                card.appendChild(img);
             }
-        }
 
-        loadDownloads();
-    </script>
+            // Type (PC.txt, VR.txt)
+            const typeFile = folder.files.find(f => f.endsWith('.txt'));
+            if (typeFile) {
+                const typeText = typeFile.replace('.txt','');
+                const p = document.createElement('p');
+                p.textContent = typeText;
+                card.appendChild(p);
+            }
+
+            // Download (exe, zip, apk)
+            const downloadFile = folder.files.find(f => /\.(exe|zip|apk)$/.test(f));
+            if (downloadFile) {
+                const btn = document.createElement('a');
+                btn.href = downloadFile; // file in root
+                btn.download = downloadFile;
+                btn.className = "btn";
+                btn.textContent = "Download";
+                card.appendChild(btn);
+            }
+
+            grid.appendChild(card);
+
+            // Nav link
+            const a = document.createElement('a');
+            a.href = `#${folder.name}`;
+            a.textContent = folder.name;
+            nav.appendChild(a);
+        });
+
+        // Always add last card
+        const lastCard = document.createElement('div');
+        lastCard.className = 'card';
+        const lastTitle = document.createElement('h3');
+        lastTitle.textContent = "That's all for now";
+        lastCard.appendChild(lastTitle);
+        grid.appendChild(lastCard);
+
+    } catch(err) {
+        console.error(err);
+        const errorCard = document.createElement('div');
+        errorCard.className = 'card';
+        const errorTitle = document.createElement('h3');
+        errorTitle.textContent = "Error loading downloads";
+        const errorMsg = document.createElement('p');
+        errorMsg.textContent = err.message;
+        errorCard.appendChild(errorTitle);
+        errorCard.appendChild(errorMsg);
+        grid.appendChild(errorCard);
+
+        // Still add last card
+        const lastCard = document.createElement('div');
+        lastCard.className = 'card';
+        const lastTitle = document.createElement('h3');
+        lastTitle.textContent = "That's all for now";
+        lastCard.appendChild(lastTitle);
+        grid.appendChild(lastCard);
+    }
+}
+
+loadDownloads();
+</script>
 </body>
 </html>
-
