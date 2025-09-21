@@ -122,7 +122,8 @@
 
         async function loadDownloads() {
             try {
-                const res = await fetch('downloads/index.json');
+                const res = await fetch('index.json');
+
                 if (!res.ok) throw new Error("Cannot fetch index.json");
                 const folders = await res.json();
 
@@ -212,3 +213,4 @@
     </script>
 </body>
 </html>
+
