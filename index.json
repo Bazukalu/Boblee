@@ -2,5 +2,11 @@
     {
         "name": "Program",
         "files": [ "Program.exe", "PC.txt", "image.png" ]
+    },
+
+     {
+        "name": "Chef Cook",
+        "files": [ "apk.apk", "VR.txt", "image.png" ]
     }
 ]
+
