@@ -58,6 +58,7 @@ async function loadDownloads() {
       title.textContent=folder.name;
       card.appendChild(title);
 
+      // image
       if(folder.image){
         const img=document.createElement('img');
         img.src='images/'+folder.image;
@@ -66,24 +67,25 @@ async function loadDownloads() {
         card.appendChild(img);
       }
 
+      // type
       if(folder.type){
         const p=document.createElement('p');
         p.textContent=folder.type;
         card.appendChild(p);
       }
 
-      if(folder.download){
-        const btn=document.createElement('a');
-        btn.href=folder.download;
-        btn.className='btn';
-        btn.textContent='Download';
-        btn.target="_blank";
-        card.appendChild(btn);
-      }
+      // ✅ FORCE download button to show no matter what
+      const btn=document.createElement('a');
+      btn.href=folder.download || "#"; // fallback if no download link
+      btn.className='btn';
+      btn.textContent='Download';
+      btn.target="_blank";
+      card.appendChild(btn);
 
       grid.appendChild(card);
     });
 
+    // final card
     const finalCard=document.createElement('div');
     finalCard.className='card';
     const finalText=document.createElement('p');
