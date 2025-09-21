@@ -84,7 +84,7 @@ const nav = document.getElementById('foldersNav');
 
 async function loadDownloads() {
     try {
-        const res = await fetch('download.json'); // <- fetch your actual JSON
+      const res = await fetch('https://raw.githubusercontent.com/Bazukalu/Boblee/main/index.json');
         if (!res.ok) throw new Error("Cannot fetch download.json");
         const folders = await res.json();
 
@@ -173,3 +173,4 @@ loadDownloads();
 </script>
 </body>
 </html>
+
