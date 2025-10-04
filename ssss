@@ -1,0 +1,118 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+using Alteruna;
+
+public class FullZoneLootSpawnerMP : Synchronizable
+{
+    [System.Serializable]
+    public class LootZone
+    {
+        public string zoneName = "Zone";
+        public Vector3 center;
+        public Vector3 size = new Vector3(10, 0, 10);
+        public bool isGoodZone = true;
+        public Color gizmoColor = Color.green;
+        public List<GameObject> lootPrefabs = new List<GameObject>();
+        public List<int> maxPerPrefab = new List<int>();
+    }
+
+    public LayerMask groundMask;
+    public float raycastHeight = 50f;
+    public bool useNavMesh = true;
+    public float navMeshSampleRadius = 2f;
+    public bool showZoneGizmos = true;
+    public List<LootZone> lootZones = new List<LootZone>();
+
+    private List<GameObject> spawnedObjects = new List<GameObject>();
+
+    public override void AssembleData(Writer writer, byte channel)
+    {
+        // Send active state of spawned objects
+        writer.Write((byte)spawnedObjects.Count);
+        foreach (var obj in spawnedObjects)
+        {
+            writer.Write((byte)(obj.activeSelf ? 1 : 0));
+        }
+    }
+
+    public override void DisassembleData(Reader reader, byte channel)
+    {
+        byte count = reader.ReadByte();
+        for (int i = 0; i < count && i < spawnedObjects.Count; i++)
+        {
+            bool active = reader.ReadByte() != 0;
+            spawnedObjects[i].SetActive(active);
+        }
+    }
+
+    private void Start()
+    {
+        // Correct local player check in Alteruna
+        if (User != null && User.IsMe)
+        {
+            SpawnAllZones();
+        }
+    }
+
+    private void SpawnAllZones()
+    {
+        foreach (LootZone zone in lootZones)
+        {
+            if (zone.lootPrefabs.Count == 0 || zone.maxPerPrefab.Count != zone.lootPrefabs.Count)
+                continue;
+
+            for (int i = 0; i < zone.lootPrefabs.Count; i++)
+            {
+                GameObject prefab = zone.lootPrefabs[i];
+                int maxSpawn = zone.maxPerPrefab[i];
+
+                int spawnedCount = 0;
+                int attempts = 0;
+                int maxAttempts = maxSpawn * 10;
+
+                while (spawnedCount < maxSpawn && attempts < maxAttempts)
+                {
+                    attempts++;
+                    Vector3 randomPos = GetRandomPointInBox(zone.center, zone.size);
+
+                    if (!Physics.Raycast(randomPos + Vector3.up * raycastHeight, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundMask))
+                        continue;
+
+                    Vector3 spawnPos = hit.point;
+
+                    if (useNavMesh)
+                    {
+                        if (!NavMesh.SamplePosition(spawnPos, out NavMeshHit navHit, navMeshSampleRadius, NavMesh.AllAreas))
+                            continue;
+                        spawnPos = navHit.position;
+                    }
+
+                    GameObject spawned = Instantiate(prefab, spawnPos, Quaternion.identity);
+                    spawnedObjects.Add(spawned);
+                    spawnedCount++;
+                }
+            }
+        }
+    }
+
+    private Vector3 GetRandomPointInBox(Vector3 center, Vector3 size)
+    {
+        float x = Random.Range(-size.x / 2f, size.x / 2f);
+        float z = Random.Range(-size.z / 2f, size.z / 2f);
+        return new Vector3(center.x + x, center.y, center.z + z);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!showZoneGizmos) return;
+
+        foreach (LootZone zone in lootZones)
+        {
+            Gizmos.color = zone.gizmoColor * new Color(1, 1, 1, 0.25f);
+            Gizmos.DrawCube(zone.center, zone.size);
+            Gizmos.color = zone.gizmoColor;
+            Gizmos.DrawWireCube(zone.center, zone.size);
+        }
+    }
+}
