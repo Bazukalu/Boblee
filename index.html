@@ -1,70 +1,79 @@
-<div class="container" id="hub">
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boblee Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
 
-    <!-- Hero Section -->
-    <div class="hero">
-        <h2>All Your Tools in One Place</h2>
-        <p>Quick access to utilities, coding helpers, and more</p>
+    <header>
+        <h1>Boblee Hub</h1>
+        <nav>
+            <a href="#" onclick="showPage('hub')">Home</a>
+            <a href="support.html">support</a>
+
+            <a href="downloads.html">downloads</a>
+
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <!-- Main Hub -->
+        <div id="hub">
+            <div class="hero">
+                <h2>All Your Tools in One Place</h2>
+                <p>Quick access to utilities, coding helpers, and more</p>
+            </div>
+
+            <!-- Coding Tools -->
+            <section class="section">
+                <h3>Useful for Coding</h3>
+                <div class="cards">
+                    <div class="card"><div>Encrypt / Decrypt</div><a href="#" onclick="showPage('encryption')">Go</a></div>
+                    <div class="card"><div>Password Generator</div><a href="#" onclick="showPage('password')">Go</a></div>
+                    <div class="card"><div>Base64 Encode/Decode</div><a href="#" onclick="showPage('base64')">Go</a></div>
+                    <div class="card"><div>JSON Formatter</div><a href="#" onclick="showPage('json')">Go</a></div>
+                    <div class="card"><div>Markdown Previewer</div><a href="#" onclick="showPage('markdown')">Go</a></div>
+                </div>
+            </section>
+
+            <!-- Utilities -->
+            <section class="section">
+                <h3>Utilities</h3>
+                <div class="cards">
+                    <div class="card"><div>Random Number Generator</div><a href="#" onclick="showPage('random')">Go</a></div>
+                    <div class="card"><div>Calculator</div><a href="#" onclick="showPage('calculator')">Go</a></div>
+                    <div class="card"><div>To-Do List</div><a href="#" onclick="showPage('todo')">Go</a></div>
+                    <div class="card"><div>Color Picker</div><a href="#" onclick="showPage('colorpicker')">Go</a></div>
+                </div>
+            </section>
+
+            <!-- Fun -->
+            <section class="section">
+                <h3>Fun & Extras</h3>
+                <div class="cards">
+                    <div class="card"><div>QR Code Generator</div><a href="#" onclick="tos.html">Go</a></div>
+                </div>
+            </section>
+
+            <!-- Support / Downloads -->
+            <section class="section">
+                <h3>Support & Downloads</h3>
+                <div class="cards">
+        
+                    <div class="card"><div>Support</div><a href="#" onclick="showPage('vr game life tos')">Go</a></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tool Pages Container -->
+        <div id="pages"></div>
+
     </div>
 
-    <!-- Coding Tools -->
-    <section class="section">
-        <h3>Useful for Coding</h3>
-        <div class="cards">
-            <div class="card">
-                <div>Encrypt / Decrypt</div>
-                <a href="#" onclick="showPage('encryption'); return false;">Go</a>
-            </div>
-            <div class="card">
-                <div>Password Generator</div>
-                <a href="#" onclick="showPage('password'); return false;">Go</a>
-            </div>
-            <div class="card">
-                <div>Base64 Encode/Decode</div>
-                <a href="#" onclick="showPage('base64'); return false;">Go</a>
-            </div>
-            <div class="card">
-                <div>JSON Formatter</div>
-                <a href="#" onclick="showPage('json'); return false;">Go</a>
-            </div>
-            <div class="card">
-                <div>Markdown Previewer</div>
-                <a href="#" onclick="showPage('markdown'); return false;">Go</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Utilities -->
-    <section class="section">
-        <h3>Utilities</h3>
-        <div class="cards">
-            <div class="card">
-                <div>Random Number Generator</div>
-                <a href="#" onclick="showPage('random'); return false;">Go</a>
-            </div>
-            <div class="card">
-                <div>Calculator</div>
-                <a href="#" onclick="showPage('calculator'); return false;">Go</a>
-            </div>
-            <div class="card">
-                <div>To-Do List</div>
-                <a href="#" onclick="showPage('todo'); return false;">Go</a>
-            </div>
-            <div class="card">
-                <div>Color Picker</div>
-                <a href="#" onclick="showPage('colorpicker'); return false;">Go</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Fun & Extras -->
-    <section class="section">
-        <h3>Fun & Extras</h3>
-        <div class="cards">
-            <div class="card">
-                <div>QR Code Generator</div>
-                <a href="tos.html">Go</a>
-            </div>
-        </div>
-    </section>
-
-</div>
+</body>
+</html>
