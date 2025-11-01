@@ -1,174 +1,166 @@
 :root {
-    --bg: #0f1720;
-    --card: #0b1a26;
-    --accent: #7dd3fc;
-    --accent2: #60a5fa;
-    --muted: #94a3b8;
-    --radius: 20px;
-    --gap: 20px;
-    --max-w: 1200px;
-    --nav-height: 60px;
+    --bg: #0a0a0a;
+    --card: #0e1113;
+    --text: #e7e9ea;
+    --muted: #9aa0a6;
+    --pri: #34d399;
+    --pri-2: #22d3ee;
+    --border: #1f2937;
 }
 
 * {
     box-sizing: border-box;
 }
 
-body {
+html, body {
+    height: 100%;
     margin: 0;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-    background: radial-gradient(1200px 600px at 10% 10%, rgba(125,211,252,0.05), transparent 12%), radial-gradient(900px 400px at 90% 90%, rgba(99,102,241,0.04), transparent 8%), var(--bg);
-    color: #e6eef6;
 }
 
-header {
+body {
+    padding-top: 72px;
+    background: radial-gradient(1200px 600px at 10% -10%, rgba(52,211,153,.12), transparent 40%), radial-gradient(900px 500px at 120% 10%, rgba(34,211,238,.10), transparent 40%), linear-gradient(#060606, #000);
+    color: var(--text);
+    font: 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif;
+}
+/* Navbar */
+nav {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: var(--nav-height);
-    background: var(--card);
+    background: rgba(15,17,19,.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+}
+
+.navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    z-index: 100;
+    padding: 12px 20px;
+    padding-right: 64px;
+    position: relative;
 }
 
-    header h1 {
-        font-size: 24px;
-        margin: 0;
-        background: linear-gradient(90deg, var(--accent), var(--accent2));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-nav a {
-    color: #e6eef6;
-    text-decoration: none;
-    margin-left: 20px;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-    nav a:hover {
-        color: var(--accent);
-    }
-
-.container {
-    max-width: var(--max-w);
-    margin: calc(var(--nav-height)+40px) auto 40px;
-    padding: 0 20px;
-}
-
-.hero {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-    .hero h2 {
-        font-size: 42px;
-        margin: 0 0 12px;
-        background: linear-gradient(90deg, var(--accent), var(--accent2));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-        font-size: 20px;
-        color: var(--muted);
-    }
-
-.section {
-    margin-bottom: 60px;
-}
-
-    .section h3 {
-        font-size: 28px;
-        margin-bottom: 20px;
-        border-bottom: 2px solid var(--accent2);
-        display: inline-block;
-        padding-bottom: 4px;
-    }
-
-.cards {
+.brand {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    gap: 10px;
+    align-items: center;
+    color: var(--text);
+    font-weight: 700;
 }
 
-.card {
-    background: var(--card);
-    border-radius: var(--radius);
-    flex: 1 1 220px;
-    padding: 20px;
+.wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    background: linear-gradient(90deg, var(--pri), var(--pri-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 0;
+}
+
+/* Card forms */
+form.card, .card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.25s ease;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    gap: 18px;
+    padding: 28px;
+    background: linear-gradient(180deg, rgba(18,20,22,0.95), rgba(8,9,10,0.95));
+    border: 1px solid rgba(52,211,153,0.25);
+    border-radius: 14px;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.4);
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-    .card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 30px rgba(0,0,0,0.7);
-        background: linear-gradient(180deg, rgba(125,211,252,0.08), rgba(96,165,250,0.03));
+    form.card:hover, .card:hover {
+        border-color: rgba(34,211,238,0.4);
+        box-shadow: 0 8px 36px rgba(0,0,0,0.55);
     }
 
-    .card div {
-        font-size: 18px;
-        margin-bottom: 12px;
-    }
-
-    .card a {
-        text-decoration: none;
-        color: #04273b;
+    /* Labels */
+    form.card label {
         font-weight: 600;
-        text-align: center;
-        padding: 10px;
-        border-radius: 10px;
-        background: linear-gradient(90deg, var(--accent), var(--accent2));
-        transition: 0.2s;
+        color: var(--pri);
     }
 
-        .card a:hover {
-            transform: translateY(-2px);
-        }
+/* Inputs */
+input[type="text"], textarea {
+    font-size: 1rem;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: rgba(25,28,31,.95);
+    color: var(--text);
+    transition: all 0.2s;
+}
 
-/* Common input styles for tools */
-input, textarea, button {
-    font-family: inherit;
-    border-radius: var(--radius);
+    input[type="text"]:focus, textarea:focus {
+        border-color: var(--pri);
+        box-shadow: 0 0 8px rgba(52,211,153,0.35);
+        outline: none;
+    }
+
+/* Buttons */
+form.card button {
+    background: linear-gradient(90deg, var(--pri), var(--pri-2));
     border: none;
-    padding: 10px;
-    margin-top: 12px;
-}
-
-input, textarea {
-    width: 100%;
-    background: var(--card);
-    color: #e6eef6;
-    resize: none;
-}
-
-button {
+    color: #000;
+    font-weight: 700;
+    padding: 12px 18px;
+    border-radius: 10px;
     cursor: pointer;
-    font-weight: 600;
-    color: #04273b;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    box-shadow: 0 6px 14px rgba(31,41,55,0.4);
-    transition: transform 0.2s ease;
+    transition: transform 0.15s ease, opacity 0.2s ease;
 }
 
-    button:hover {
-        transform: translateY(-2px);
+    form.card button:hover {
+        opacity: .9;
+        transform: translateY(-1px);
     }
 
-.output {
-    margin-top: 12px;
-    background: var(--card);
-    padding: 12px;
-    border-radius: var(--radius);
-    word-break: break-word;
+/* Checkbox toggle */
+input[type="checkbox"] {
+    appearance: none;
+    width: 50px;
+    height: 26px;
+    background: var(--border);
+    border-radius: 13px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    input[type="checkbox"]:checked {
+        background: var(--pri);
+    }
+
+    input[type="checkbox"]::before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 20px;
+        height: 20px;
+        background: var(--text);
+        border-radius: 50%;
+        transition: transform 0.2s;
+    }
+
+    input[type="checkbox"]:checked::before {
+        transform: translateX(24px);
+    }
+
+/* Toggle label */
+label[for="myToggle"] {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    color: var(--pri);
 }
